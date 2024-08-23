@@ -186,7 +186,7 @@ def reanalyze_subdomains():
         if len(domain_info) > 0:
             for d in domain_info:
                 if d.domain_id is not None:
-                    results.append(Domain.get(d.domain_id))
+                    results.append(SubDomain.get(d.domain_id))
        
         logger.info("Domain info to rescan: %s", len(results))
         for subdomain in results:
