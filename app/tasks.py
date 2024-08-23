@@ -156,7 +156,7 @@ def save_domain_info(d_id, sd_id, result, mode='get'):
             engine_name = analysis['engine_name'] if 'engine_name' in analysis else ''
             category = analysis['category'] if 'category' in analysis else ''
             result = analysis['result'] if 'result' in analysis else ''
-            a = AnalysisResult.create(method, engine_name, category, result)
+            a = AnalysisResult.create_or_find(method, engine_name, category, result)
             a.attach_domain_info(domain_info.id)
             a.attach_domain(d_id)
             a.attach_subdomain(sd_id)

@@ -63,6 +63,13 @@ class AnalysisResult(db.Model):
         db.session.add(analysis_result)
         db.session.commit()
         return analysis_result
+
+    @staticmethod
+    def create_or_find(method: str, engine_name: str, category: str, result: str) -> 'AnalysisResult':
+        analysis_result = AnalysisResult.query.filter_by(method=method, engine_name=engine_name, category=category, result=result).first()
+        if analysis_result:
+            return analysis_result
+        return AnalysisResult.create(method, engine_name, category, result)
     
     def attach_domain(self, domain_id: int) -> None:
         self.domain_id = domain_id
