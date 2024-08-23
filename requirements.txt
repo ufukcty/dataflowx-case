@@ -1,0 +1,11 @@
+Flask
+redis
+celery
+minio
+Flask-Migrate
+Flask-SQLAlchemy
+contextlib2
+requests
+python-dotenv
+pymysql
+cryptography

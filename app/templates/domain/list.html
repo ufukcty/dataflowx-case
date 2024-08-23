@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="display-4 fw-bold">URLS</h1>
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Status</th>
+        <th scope="col">View Analysis</th>
+        <th scope="col">Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for domain in domains %}
+        <tr>
+            <td> {{ domain.id }} </td>
+            <td>{{ domain.name }}</td>
+            <td>
+              <button disabled class="btn {% if domain.status.get_name() == 'created' %}btn-primary{% elif domain.status.get_name() == 'inprogress' %}btn-info{% elif domain.status.get_name() == 'completed' %}btn-success{% elif domain.status.get_name() == 'rescan' %}btn-warning{% else %}btn-secondary{% endif %}">{{ domain.status.get_name() }}</button>
+            </td>
+            <td>
+                <a href="{{ url_for('domain.get', _id=domain.id) }}">View Analysis</a>
+            </td>
+            <td>
+                <form method="post" action="{{ url_for('domain.delete', _id=domain.id) }}" style="display:inline;">
+                    <button name="delete" type="submit" class="btn btn-danger"">Delete</button>
+                </form>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

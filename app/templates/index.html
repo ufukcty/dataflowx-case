@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+{% if _id %}
+<div class="alert">
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+    <strong>Success!</strong> Your URL has been successfully saved. <a href="/domain/{{ _id }}">Click here</a> to view the results.
+</div>
+{% endif %}
+
+<div class="px-4 py-5 my-5 text-center">
+    <img class="d-block mx-auto mb-12" src="https://pbs.twimg.com/profile_images/1458557583178993667/gruw-X0e_400x400.jpg" alt="" style="width: 15%;height: 10%;">
+    <h1 class="display-5 fw-bold">Scan a URL</h1>
+    <div class="col-lg-6 mx-auto">
+      <p class="lead mb-4">Analyse URLs to detect malware and other breaches, automatically share them with the security community.</p>
+      <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+        <form id="upload-form" method="post" action="{{ url_for('domain.create') }}" class="row">
+            <div class="form-group">
+                <label for="name" class="upload-label form-label">Enter URL</label>
+                <input type="url" value="{{ request.form['name'] }}" id="url-upload" name="name" placeholder="https://example.com" class="form-control">
+                <small id="emailHelp" class="form-text text-muted">Enter url for scan in Virustotal</small>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}
