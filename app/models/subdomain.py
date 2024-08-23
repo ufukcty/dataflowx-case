@@ -65,10 +65,16 @@ class AnalysisResult(db.Model):
         return analysis_result
 
     @staticmethod
-    def create_or_find(method: str, engine_name: str, category: str, result: str) -> 'AnalysisResult':
-        analysis_result = AnalysisResult.query.filter_by(method=method, engine_name=engine_name, category=category, result=result).first()
-        if analysis_result:
-            return analysis_result
+    def create_or_find(method: str, engine_name: str, category: str, result: str, domain_id=None, subdomain_id=None) -> 'AnalysisResult':
+        if domain_id is not None:
+            analysis_result = AnalysisResult.query.filter_by(method=method, engine_name=engine_name, category=category, result=result, domain_id=domain_id).first()
+            if analysis_result:
+                return analysis_result
+        if subdomain_id is not None:
+            analysis_result = AnalysisResult.query.filter_by(method=method, engine_name=engine_name, category=category, result=result, subdomain_id=subdomain_id).first()
+            if analysis_result:
+                return analysis_result
+            
         return AnalysisResult.create(method, engine_name, category, result)
     
     def attach_domain(self, domain_id: int) -> None:
