@@ -191,10 +191,11 @@ def reanalyze_subdomains():
         logger.info("Domain info to rescan: %s", len(results))
         for subdomain in results:
             logger.info(subdomain)
-            scan_url_result = vt.scan_url(subdomain.name)
+            s = SubDomain.get(subdomain.id)
+            scan_url_result = vt.scan_url(s.name)
             logger.info("Rescan result received")
             if scan_url_result is None:
-                logger.error('Error during subdomain rescan %s', subdomain.name)
+                logger.error('Error during subdomain rescan %s', s.name)
                 continue
             ok = save_domain_info(None, subdomain.id, scan_url_result, 'scan')
             logging.info('Save domain info result: %s', ok)
@@ -222,8 +223,9 @@ def reanalyze_domains():
         
         logger.info("Domain info to rescan: %s", len(domains_to_rescan))
         for domain in domains_to_rescan:
-            r = vt.scan_url(domain.name)
-            ok = save_domain_info(domain.id, None, r, 'scan')
+            d = Domain.get(domain.id)
+            r = vt.scan_url(d.name)
+            ok = save_domain_info(d.id, None, r, 'scan')
             if ok:
                 domain.update(status=StatusEnum.STATUS_COMPLETED)
     except Exception as e:
